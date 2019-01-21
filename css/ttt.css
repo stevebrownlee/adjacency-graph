@@ -1,0 +1,23 @@
+:root {
+    --box-dimension: 200px;
+}
+
+game {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+
+row {
+    display: block;
+    display: flex;
+    flex-direction: row;
+}
+
+column {
+    border: 1px solid black;
+    width: var(--box-dimension);
+    height: var(--box-dimension);
+    display: block;
+    cursor: pointer;
+}
