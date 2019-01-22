@@ -55,15 +55,9 @@ for (const square of squares) {
                             isWinner = true
                         }
                     }
-
                 }
                 console.log(`Winner?: ${isWinner}`)
             }
         }
     })
 }
-
-
-
-
-
