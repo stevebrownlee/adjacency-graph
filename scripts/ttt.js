@@ -2,7 +2,8 @@
 const squares = document.querySelectorAll(".square")
 let turns = 0
 
-const turn = function* () {
+// Generator function for whose turns it is
+const currentPlayer = function* () {
     let turn = 0
 
     while (true) {
@@ -11,16 +12,12 @@ const turn = function* () {
     }
 }()
 
-const nodes = function (neighbor) {
-    adjacencyGraph.get(neighbor)
-}
-
 for (const square of squares) {
     square.addEventListener("click", e => {
         const content = e.target.textContent
 
         if (content === "") {
-            e.target.textContent = (turn.next().value === 1) ? "X" : "O"
+            e.target.textContent = (currentPlayer.next().value === 1) ? "X" : "O"
             turns++
         }
         if (turns > 4) {
@@ -41,6 +38,7 @@ for (const square of squares) {
             if (paths.size >= 2) {
                 const neighbors = []
 
+                // Add angles to neighbors array
                 for (const path of paths) {
                     neighbors.push(path[0][1])
                 }
