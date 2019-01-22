@@ -39,10 +39,27 @@ for (const square of squares) {
 
             // Are there two neighbors? Check if victory.
             if (paths.size >= 2) {
+                const neighbors = []
+
                 for (const path of paths) {
-                    // If the difference between the two (angles/45) is 3, it's a winner
-                    console.log(`Angle: ${path[0][1]}`)
+                    neighbors.push(path[0][1])
                 }
+
+                // If the difference between any two (angles/45) is 4, it's a winner
+                isWinner = false
+                for (let i = 0; i < neighbors.length; i++) {
+                    const source = neighbors[i];
+
+                    for (let j = i+1; j < neighbors.length; j++) {
+                        const target = neighbors[j];
+
+                        if (Math.abs((source/45) - (target/45)) === 4) {
+                            isWinner = true
+                        }
+                    }
+
+                }
+                console.log(`Winner?: ${isWinner}`)
             }
         }
     })
