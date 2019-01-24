@@ -5,7 +5,6 @@ let turns = 0
 // Generator function for whose turns it is
 const currentPlayer = function* () {
     let turn = 0
-
     while (true) {
         turn = 1 - turn
         yield turn
@@ -14,49 +13,45 @@ const currentPlayer = function* () {
 
 for (const square of squares) {
     square.addEventListener("click", e => {
-        const content = e.target.textContent
+        let currentNodeCharacter = e.target.textContent
 
-        if (content === "") {
-            e.target.textContent = (currentPlayer.next().value === 1) ? "X" : "O"
+        if (currentNodeCharacter === "") {
+            currentNodeCharacter = e.target.textContent = (currentPlayer.next().value === 1) ? "X" : "O"
             turns++
         }
+
+        // Not possible to win in 4, or less, moves
         if (turns > 4) {
-            const edges = adjacencyGraph.get(parseInt(e.target.id))
-            const paths = new Map()
-            for (const edge of edges) {
-                const neighbor = document.getElementById(edge[0])
-                if (e.target.textContent === neighbor.textContent) {
-                    if (paths.has(edge)) {
-                        path.set(edge, paths.get(edge)++)
-                    } else {
-                        paths.set(edge, 1)
-                    }
-                }
-            }
+            // Get all adjacent nodes
+            const adjacentNodes = adjacencyGraph.get(parseInt(e.target.id))
 
-            // Are there two neighbors? Check if victory.
-            if (paths.size >= 2) {
-                const neighbors = []
+            // Set to contain all matching adjacent nodes
+            const matchingAdjacentNodes = new Set()
 
-                // Add angles to neighbors array
-                for (const path of paths) {
-                    neighbors.push(path[0][1])
-                }
+            for (const node of adjacentNodes) {
+                // Get content of adjacent node
+                const adjacentNodeCharacter = document.getElementById(node[0]).textContent
 
-                // If the difference between any two (angles/45) is 4, it's a winner
-                isWinner = false
-                for (let i = 0; i < neighbors.length; i++) {
-                    const source = neighbors[i];
-
-                    for (let j = i+1; j < neighbors.length; j++) {
-                        const target = neighbors[j];
-
-                        if (Math.abs((source/45) - (target/45)) === 4) {
-                            isWinner = true
+                // If letters match, add neighbor to Set
+                if (currentNodeCharacter === adjacentNodeCharacter) {
+                    /*
+                        Calculate current matching node to pre-existing matching nodes.
+                        If abs() value of difference between any two edge weights is
+                        4, then there are two matches in the same direction.
+                    */
+                    try {
+                        for (const matchedNode of matchingAdjacentNodes) {
+                            if (Math.abs((matchedNode[1]/45) - (node[1]/45)) === 4) {
+                                throw "Winner"
+                            }
+                        }
+                        matchingAdjacentNodes.add(node)
+                    } catch (error) {
+                        if (error === "Winner") {
+                            window.alert("Winner")
                         }
                     }
                 }
-                console.log(`Winner?: ${isWinner}`)
             }
         }
     })
