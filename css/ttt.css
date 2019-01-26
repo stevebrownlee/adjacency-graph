@@ -33,6 +33,11 @@ column {
     transition: 2s all ease;
 }
 
+.loser {
+    border-width:7px;
+    border: none;
+}
+
 .toast {
     top: 20px;
 }

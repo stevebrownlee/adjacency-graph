@@ -7,7 +7,7 @@ const currentPlayer = function* () {
     let turn = 0
     while (true) {
         turn = 1 - turn
-        yield turn
+        yield turn === 1 ? "X" : "O"
     }
 }()
 
@@ -22,7 +22,7 @@ for (const square of squares) {
         let currentNodeCharacter = e.target.textContent
 
         if (currentNodeCharacter === "") {
-            currentNodeCharacter = e.target.textContent = (currentPlayer.next().value === 1) ? "X" : "O"
+            currentNodeCharacter = e.target.textContent = currentPlayer.next().value
             turns++
         }
 
@@ -48,6 +48,14 @@ for (const square of squares) {
                     try {
                         for (const matchedNode of matchingAdjacentNodes) {
                             if (Math.abs((matchedNode[1]/45) - (node[1]/45)) === 4) {
+                                for (const col of document.getElementsByTagName("column")) {
+                                    col.classList.add("loser")
+                                }
+
+                                document.getElementById(matchedNode[0]).classList.remove("loser")
+                                document.getElementById(node[0]).classList.remove("loser")
+                                e.target.classList.remove("loser")
+
                                 document.getElementById(matchedNode[0]).classList.add("winner")
                                 document.getElementById(node[0]).classList.add("winner")
                                 e.target.classList.add("winner")
