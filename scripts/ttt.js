@@ -48,6 +48,9 @@ for (const square of squares) {
                     try {
                         for (const matchedNode of matchingAdjacentNodes) {
                             if (Math.abs((matchedNode[1]/45) - (node[1]/45)) === 4) {
+                                document.getElementById(matchedNode[0]).classList.add("winner")
+                                document.getElementById(node[0]).classList.add("winner")
+                                e.target.classList.add("winner")
                                 throw "Winner"
                             }
                         }

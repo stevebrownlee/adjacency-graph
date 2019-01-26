@@ -1,4 +1,5 @@
 @import "letters.css";
+@import "animations.css";
 
 :root {
     --box-dimension: 200px;
@@ -24,6 +25,12 @@ column {
     display: flex;
     flex-direction: column;
     cursor: pointer;
+}
+
+.winner {
+    animation: spin 2s;
+    border-width:7px;
+    transition: 2s all ease;
 }
 
 .toast {
