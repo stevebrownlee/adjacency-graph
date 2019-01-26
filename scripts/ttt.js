@@ -11,6 +11,12 @@ const currentPlayer = function* () {
     }
 }()
 
+configureToasts({
+    deleteDelay: 300 // time until the toast is completely removed from the DOM after deleting.
+});
+
+new Toast("Welcome!", Toast.TYPE_INFO, Toast.TIME_SHORT)
+
 for (const square of squares) {
     square.addEventListener("click", e => {
         let currentNodeCharacter = e.target.textContent
@@ -48,7 +54,7 @@ for (const square of squares) {
                         matchingAdjacentNodes.add(node)
                     } catch (error) {
                         if (error === "Winner") {
-                            window.alert("Winner")
+                            new Toast(`Winner is ${currentNodeCharacter}!`, Toast.TYPE_INFO, Toast.TIME_SHORT)
                         }
                     }
                 }

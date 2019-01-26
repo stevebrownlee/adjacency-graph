@@ -1,3 +1,5 @@
+@import "letters.css";
+
 :root {
     --box-dimension: 200px;
 }
@@ -9,15 +11,26 @@ game {
 }
 
 row {
-    display: block;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 column {
     border: 1px solid black;
     width: var(--box-dimension);
     height: var(--box-dimension);
-    display: block;
+    display: flex;
+    flex-direction: column;
     cursor: pointer;
+}
+
+.toast {
+    top: 20px;
+}
+
+.toast > .body {
+    font-family: 'CoreCircus', sans-serif;
+    font-size: 3em;
 }
